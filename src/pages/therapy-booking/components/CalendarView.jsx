@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 
-const CalendarView = ({ selectedDate, onDateSelect, availableSlots, onSlotSelect, selectedSlot }) => {
+const CalendarView = ({ selectedDate, onDateSelect, availableSlots, onSlotSelect, selectedSlot, proceedToBooking}) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [viewMode, setViewMode] = useState('month'); // month, week
 
@@ -252,6 +252,25 @@ const CalendarView = ({ selectedDate, onDateSelect, availableSlots, onSlotSelect
         <div className="border-t border-border pt-6">
           {renderTimeSlots()}
         </div>
+        {selectedSlot && (
+          <div className="mt-6 p-4 bg-success/10 border border-success/20 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-medium text-success">Slot Selected!</h4>
+                <p className="text-sm text-text-secondary">
+                  {formatTime(selectedSlot.startTime)} - {formatTime(selectedSlot.endTime)} with {selectedSlot.practitioner}
+                </p>
+              </div>
+              <Button
+                onClick={proceedToBooking}
+                size="sm"
+                className="bg-[#2d5016] hover:bg-[#244012] text-white"
+              >
+                Continue to Booking
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -42,7 +42,7 @@ const TherapySelection = ({ selectedTherapy, onTherapySelect }) => {
       duration: '45 minutes',
       price: 3500,
       category: 'Shamana Chikitsa',
-      image: 'https://images.pexels.com/photos/6663515/pexels-photo-6663515.jpeg',
+      image: 'https://ayurvaid.com/wp-content/uploads/2022/09/SHIRODHARA.png',
       description: `Continuous pouring of warm medicated oil or other liquids over the forehead in a steady stream.\n\nThis deeply relaxing therapy calms the nervous system, reduces stress, and promotes mental clarity by balancing Vata and Pitta doshas.`,
       benefits: ['Mental relaxation', 'Improved sleep', 'Stress reduction', 'Hair nourishment'],
       preparation: ['Empty stomach preferred', 'Avoid heavy meals', 'Wear old clothes'],

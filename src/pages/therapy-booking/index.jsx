@@ -339,6 +339,7 @@ const TherapyBooking = () => {
               <TherapySelection
                 selectedTherapy={selectedTherapy}
                 onTherapySelect={handleTherapySelect}
+                proceedToBooking={proceedToBooking} // Pass as prop
               />
               
               <CalendarView
@@ -347,6 +348,7 @@ const TherapyBooking = () => {
                 availableSlots={availableSlots}
                 onSlotSelect={handleSlotSelect}
                 selectedSlot={selectedSlot}
+                proceedToBooking={proceedToBooking}  // <-- ADD THIS LINE
               />
             </div>
 
