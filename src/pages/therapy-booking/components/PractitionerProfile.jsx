@@ -142,7 +142,7 @@ const PractitionerProfile = ({ selectedPractitioner, onPractitionerSelect, avail
     return (
       <div className="bg-card rounded-lg p-6 space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="font-heading font-semibold text-xl">Selected Practitioner</h2>
+          <h2 className="font-heading font-semibold text-xl">Descriptive Profile</h2>
           <Button
             variant="ghost"
             size="sm"
@@ -245,7 +245,7 @@ const PractitionerProfile = ({ selectedPractitioner, onPractitionerSelect, avail
   return (
     <div className="bg-card rounded-lg p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-heading font-semibold text-xl">Choose Practitioner</h2>
+        <h2 className="font-heading font-semibold text-xl">View Practitioner</h2>
         <div className="text-sm text-text-secondary">
           Select your preferred Vaidya
         </div>
@@ -318,7 +318,7 @@ const PractitionerProfile = ({ selectedPractitioner, onPractitionerSelect, avail
                     iconName="ArrowRight"
                     iconSize={14}
                   >
-                    Select
+                    View Profile
                   </Button>
                 </div>
               </div>
