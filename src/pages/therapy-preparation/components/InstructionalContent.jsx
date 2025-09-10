@@ -132,76 +132,7 @@ const InstructionalContent = ({ videos, tips, emergencyContact }) => {
         </div>
       </div>
       {/* Emergency Contact */}
-      <div className="bg-error/5 border border-error/20 rounded-lg p-6">
-        <div className="flex items-center space-x-3 mb-4">
-          <div className="w-10 h-10 bg-error/10 rounded-full flex items-center justify-center">
-            <Icon name="Phone" size={20} className="text-error" />
-          </div>
-          <div>
-            <h3 className="text-lg font-heading font-semibold text-foreground">
-              Emergency Contact
-            </h3>
-            <p className="text-sm text-text-secondary">Available 24/7 for urgent queries</p>
-          </div>
-        </div>
-
-        <div className="bg-background rounded-lg p-4">
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <h4 className="font-semibold text-foreground">{emergencyContact?.name}</h4>
-              <p className="text-sm text-text-secondary">{emergencyContact?.designation}</p>
-            </div>
-            <div className="w-12 h-12 bg-error/10 rounded-full flex items-center justify-center">
-              <Icon name="UserCheck" size={20} className="text-error" />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center space-x-3">
-              <Icon name="Phone" size={16} className="text-text-secondary" />
-              <span className="text-sm text-foreground">{emergencyContact?.phone}</span>
-              <Button
-                variant="outline"
-                size="sm"
-                iconName="Phone"
-                iconSize={14}
-                className="ml-auto"
-              >
-                Call Now
-              </Button>
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              <Icon name="MessageCircle" size={16} className="text-text-secondary" />
-              <span className="text-sm text-foreground">WhatsApp Available</span>
-              <Button
-                variant="outline"
-                size="sm"
-                iconName="MessageCircle"
-                iconSize={14}
-                className="ml-auto"
-              >
-                Message
-              </Button>
-            </div>
-          </div>
-
-          <div className="mt-4 p-3 bg-warning/5 rounded-lg">
-            <div className="flex items-start space-x-2">
-              <Icon name="AlertTriangle" size={16} className="text-warning mt-0.5" />
-              <div>
-                <p className="text-sm text-foreground font-medium mb-1">When to Contact:</p>
-                <ul className="text-xs text-text-secondary space-y-1">
-                  <li>• Severe allergic reactions to prescribed preparations</li>
-                  <li>• Unexpected symptoms or discomfort</li>
-                  <li>• Questions about medication interactions</li>
-                  <li>• Emergency rescheduling needs</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 };

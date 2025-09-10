@@ -7,9 +7,9 @@ import { Checkbox } from '../../../components/ui/Checkbox';
 
 const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBookingSubmit }) => {
   const [formData, setFormData] = useState({
-    patientName: 'Arjun Patel',
+    patientName: 'Raj Pawar',
     phone: '+91 98765 43210',
-    email: 'arjun.patel@email.com',
+    email: 'raj.pawar@email.com',
     age: '32',
     gender: 'male',
     emergencyContact: '+91 98765 43211',
@@ -55,7 +55,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
       ...prev,
       [field]: value
     }));
-    
+
     // Clear error when user starts typing
     if (errors?.[field]) {
       setErrors(prev => ({
@@ -112,17 +112,17 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
 
   const handleSubmit = async (e) => {
     e?.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       const bookingData = {
         ...formData,
         therapy: selectedTherapy,
@@ -132,7 +132,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
         bookingDate: new Date()?.toISOString(),
         status: 'confirmed'
       };
-      
+
       onBookingSubmit(bookingData);
     } catch (error) {
       console.error('Booking submission error:', error);
@@ -156,7 +156,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
       month: 'long',
       day: 'numeric'
     });
-    
+
     const formattedTime = `${new Date(`2000-01-01T${startTime}`)?.toLocaleTimeString('en-IN', {
       hour: 'numeric',
       minute: '2-digit',
@@ -166,7 +166,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
       minute: '2-digit',
       hour12: true
     })}`;
-    
+
     return { formattedDate, formattedTime };
   };
 
@@ -205,7 +205,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
       {/* Booking Summary */}
       <div className="bg-muted rounded-lg p-4 space-y-3">
         <h3 className="font-heading font-medium text-foreground">Appointment Summary</h3>
-        
+
         <div className="grid md:grid-cols-2 gap-4 text-sm">
           <div>
             <div className="text-text-secondary">Therapy</div>
@@ -233,7 +233,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
           <h3 className="font-heading font-medium text-foreground border-b border-border pb-2">
             Personal Information
           </h3>
-          
+
           <div className="grid md:grid-cols-2 gap-4">
             <Input
               label="Full Name (पूरा नाम)"
@@ -244,7 +244,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
               required
               placeholder="Enter your full name"
             />
-            
+
             <Input
               label="Phone Number (फ़ोन नंबर)"
               type="tel"
@@ -266,7 +266,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
               required
               placeholder="your.email@example.com"
             />
-            
+
             <Input
               label="Age (आयु)"
               type="number"
@@ -278,7 +278,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
               max="100"
               placeholder="32"
             />
-            
+
             <Select
               label="Gender (लिंग)"
               options={genderOptions}
@@ -307,7 +307,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
           <h3 className="font-heading font-medium text-foreground border-b border-border pb-2">
             Medical Information
           </h3>
-          
+
           <Input
             label="Medical History (चिकित्सा इतिहास)"
             type="text"
@@ -348,7 +348,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
           <h3 className="font-heading font-medium text-foreground border-b border-border pb-2">
             Treatment Preferences
           </h3>
-          
+
           <Input
             label="Specific Concerns (विशिष्ट चिंताएं)"
             type="text"
@@ -379,7 +379,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
           <h3 className="font-heading font-medium text-foreground border-b border-border pb-2">
             Additional Services
           </h3>
-          
+
           <div className="space-y-3">
             <Checkbox
               label="Transportation assistance needed"
@@ -387,7 +387,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
               checked={formData?.transportationNeeded}
               onChange={(e) => handleInputChange('transportationNeeded', e?.target?.checked)}
             />
-            
+
             <Checkbox
               label="Accommodation assistance needed"
               description="Help with nearby accommodation arrangements"
@@ -410,7 +410,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
           <h3 className="font-heading font-medium text-foreground border-b border-border pb-2">
             Terms & Conditions
           </h3>
-          
+
           <div className="space-y-3">
             <Checkbox
               label="I agree to the terms and conditions"
@@ -420,7 +420,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
               error={errors?.agreedToTerms}
               required
             />
-            
+
             <Checkbox
               label="I agree to follow preparation guidelines"
               description="I will follow all Purva Karma (pre-treatment) instructions provided"
@@ -438,7 +438,7 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
             <Icon name="Shield" size={16} className="inline mr-1" />
             Your information is secure and confidential
           </div>
-          
+
           <Button
             type="submit"
             loading={isSubmitting}

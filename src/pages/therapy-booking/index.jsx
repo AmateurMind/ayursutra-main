@@ -12,7 +12,7 @@ import Icon from '../../components/AppIcon';
 const TherapyBooking = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Booking state management
   const [currentStep, setCurrentStep] = useState('selection'); // selection, booking, confirmation
   const [selectedDate, setSelectedDate] = useState(null);
@@ -27,7 +27,7 @@ const TherapyBooking = () => {
   // User authentication state
   const [userRole] = useState('patient');
   const [isAuthenticated] = useState(true);
-  const [userName] = useState('Arjun Patel');
+  const [userName] = useState('Raj Pawar');
 
   // Add available practitioners state
   const [availablePractitioners] = useState([
@@ -47,7 +47,7 @@ const TherapyBooking = () => {
   const generateAvailableSlots = (date) => {
     const practitioners = [
       { id: 1, name: 'Dr. Rajesh Sharma', specialization: 'Panchakarma', experience: 15 },
-      { id: 2, name: 'Dr. Priya Patel', specialization: 'Herbal Medicine', experience: 12 }, 
+      { id: 2, name: 'Dr. Priya Patel', specialization: 'Herbal Medicine', experience: 12 },
       { id: 3, name: 'Dr. Amit Gupta', specialization: 'Massage Therapy', experience: 10 },
       { id: 4, name: 'Dr. Kavita Singh', specialization: 'Detoxification', experience: 18 }
     ];
@@ -68,7 +68,7 @@ const TherapyBooking = () => {
 
     timeSlots?.forEach((slot, index) => {
       const slotHour = parseInt(slot?.start?.split(':')?.[0]);
-      
+
       // Skip past slots for today
       if (isToday && slotHour <= currentHour) {
         return;
@@ -205,7 +205,7 @@ const TherapyBooking = () => {
                     Back to Selection
                   </Button>
                 </div>
-                
+
                 {/* Selection Summary */}
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
                   <div className="flex items-center space-x-2">
@@ -227,9 +227,9 @@ const TherapyBooking = () => {
                     <div>
                       <div className="font-medium text-foreground">Schedule</div>
                       <div className="text-text-secondary">
-                        {selectedDate?.toLocaleDateString('en-IN', { 
-                          month: 'short', 
-                          day: 'numeric' 
+                        {selectedDate?.toLocaleDateString('en-IN', {
+                          month: 'short',
+                          day: 'numeric'
                         })} at {selectedSlot?.startTime}
                       </div>
                     </div>
@@ -294,27 +294,24 @@ const TherapyBooking = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div className={`flex items-center space-x-2 ${selectedTherapy ? 'text-success' : 'text-text-secondary'}`}>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
-                    selectedTherapy ? 'bg-success text-success-foreground' : 'bg-muted text-text-secondary'
-                  }`}>
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${selectedTherapy ? 'bg-success text-success-foreground' : 'bg-muted text-text-secondary'
+                    }`}>
                     {selectedTherapy ? <Icon name="Check" size={14} /> : '1'}
                   </div>
                   <span className="text-sm font-medium">Select Therapy</span>
                 </div>
                 <Icon name="ChevronRight" size={16} className="text-text-secondary" />
                 <div className={`flex items-center space-x-2 ${selectedPractitioner ? 'text-success' : 'text-text-secondary'}`}>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
-                    selectedPractitioner ? 'bg-success text-success-foreground' : 'bg-muted text-text-secondary'
-                  }`}>
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${selectedPractitioner ? 'bg-success text-success-foreground' : 'bg-muted text-text-secondary'
+                    }`}>
                     {selectedPractitioner ? <Icon name="Check" size={14} /> : '2'}
                   </div>
                   <span className="text-sm font-medium">Choose Practitioner</span>
                 </div>
                 <Icon name="ChevronRight" size={16} className="text-text-secondary" />
                 <div className={`flex items-center space-x-2 ${selectedSlot ? 'text-success' : 'text-text-secondary'}`}>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
-                    selectedSlot ? 'bg-success text-success-foreground' : 'bg-muted text-text-secondary'
-                  }`}>
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${selectedSlot ? 'bg-success text-success-foreground' : 'bg-muted text-text-secondary'
+                    }`}>
                     {selectedSlot ? <Icon name="Check" size={14} /> : '3'}
                   </div>
                   <span className="text-sm font-medium">Pick Time Slot</span>
@@ -341,7 +338,7 @@ const TherapyBooking = () => {
                 onTherapySelect={handleTherapySelect}
                 proceedToBooking={proceedToBooking} // Pass as prop
               />
-              
+
               <CalendarView
                 selectedDate={selectedDate}
                 onDateSelect={handleDateSelect}

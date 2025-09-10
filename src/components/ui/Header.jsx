@@ -381,7 +381,7 @@ const Header = ({ userRole = null, isAuthenticated = false, userName = '', onLog
           <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
             <Icon name="User" size={16} className="text-secondary-foreground" />
           </div>
-          <span className="font-body text-foreground">{userName || 'User'}</span>
+          <span className="font-body text-foreground">{userName || 'Raj Pawar'}</span>
         </div>
         <Button
           variant="ghost"

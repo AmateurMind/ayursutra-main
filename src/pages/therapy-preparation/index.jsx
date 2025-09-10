@@ -15,7 +15,7 @@ const TherapyPreparation = () => {
   const [activeTab, setActiveTab] = useState('checklist');
   const [isAuthenticated] = useState(true);
   const [userRole] = useState('patient');
-  const [userName] = useState('Priya Sharma');
+  const [userName] = useState('Raj Pawar');
 
   // Mock data for therapy preparation
   const therapyDetails = {
@@ -189,8 +189,8 @@ const TherapyPreparation = () => {
       title: "Pre-Abhyanga Preparation Guide",
       description: "Complete guide to preparing for your oil massage therapy",
       thumbnail: "https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg",
-      duration: "8:45",
-      instructor: "Dr. Rajesh Vaidya",
+      duration: "12:14",
+      instructor: "Dr. Rajesh Sharma",
       rating: "4.9",
       videoUrl: "https://www.youtube.com/watch?v=JWxFlKkSq54" // <-- added YouTube link
     },
@@ -199,8 +199,8 @@ const TherapyPreparation = () => {
       title: "Breathing Techniques for Therapy",
       description: "Learn Pranayama techniques to enhance therapy benefits",
       thumbnail: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg",
-      duration: "12:30",
-      instructor: "Dr. Meera Sharma",
+      duration: "3:00",
+      instructor: "Dr. Priya Patel",
       rating: "4.8",
       videoUrl: "https://www.youtube.com/watch?v=Wemm-i6XHr8" // <-- added YouTube link
     },
@@ -209,8 +209,8 @@ const TherapyPreparation = () => {
       title: "Post-Therapy Care Instructions",
       description: "Essential care tips for after your Abhyanga session",
       thumbnail: "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg",
-      duration: "6:15",
-      instructor: "Dr. Amit Kumar",
+      duration: "9:25:15",
+      instructor: "Dr. Amit Gupta",
       rating: "4.7",
       videoUrl: "https://www.youtube.com/watch?v=RCxp0MLzRYw" // <-- added YouTube link
     }
@@ -256,7 +256,7 @@ const TherapyPreparation = () => {
   ];
 
   const emergencyContact = {
-    name: "Dr. Rajesh Vaidya",
+    name: "Dr. Mohammad Suhail",
     designation: "Senior Ayurvedic Practitioner",
     phone: "+91 98765 43210",
     available: "24/7"
@@ -337,7 +337,7 @@ const TherapyPreparation = () => {
                     className={`
                       flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap
                       ${activeTab === tab?.id
-                        ? 'border-primary text-primary' :'border-transparent text-text-secondary hover:text-foreground hover:border-border'
+                        ? 'border-primary text-primary' : 'border-transparent text-text-secondary hover:text-foreground hover:border-border'
                       }
                     `}
                   >
@@ -407,7 +407,7 @@ const TherapyPreparation = () => {
                   >
                     View Appointment Details
                   </Button>
-                  
+
                   <Button
                     variant="outline"
                     fullWidth
@@ -417,7 +417,7 @@ const TherapyPreparation = () => {
                   >
                     Contact Practitioner
                   </Button>
-                  
+
                   <Button
                     variant="outline"
                     fullWidth
@@ -442,7 +442,7 @@ const TherapyPreparation = () => {
                       {checklistItems?.filter(item => item?.completed)?.length}/{checklistItems?.length}
                     </span>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-text-secondary">Diet Guidelines</span>
                     <div className="flex items-center space-x-1">
@@ -450,7 +450,7 @@ const TherapyPreparation = () => {
                       <span className="text-sm text-success">Reviewed</span>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-text-secondary">Rest Guidelines</span>
                     <div className="flex items-center space-x-1">
@@ -481,6 +481,91 @@ const TherapyPreparation = () => {
                   Customize Reminders
                 </Button>
               </div>
+              <div className="bg-error/5 border border-error/20 rounded-lg p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-10 h-10 bg-error/10 rounded-full flex items-center justify-center">
+                    <Icon name="Phone" size={20} className="text-error" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-heading font-semibold text-foreground">
+                      Emergency Contact
+                    </h3>
+                    <p className="text-sm text-text-secondary">Available 24/7 for urgent queries</p>
+                  </div>
+                </div>
+
+                <div className="bg-background rounded-lg p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <div>
+                      <h4 className="font-semibold text-foreground">{emergencyContact?.name}</h4>
+                      <p className="text-sm text-text-secondary">{emergencyContact?.designation}</p>
+                    </div>
+                    <div className="w-12 h-12 bg-error/10 rounded-full flex items-center justify-center">
+                      <Icon name="UserCheck" size={20} className="text-error" />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-3">
+                      <Icon name="Phone" size={16} className="text-text-secondary" />
+                      <span className="text-sm text-foreground">{emergencyContact?.phone}</span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        iconName="Phone"
+                        iconSize={14}
+                        className="ml-auto"
+                        onClick={() => {
+                          if (confirm(`Do you want to dial ${emergencyContact?.phone}?`)) {
+                            window.location.href = `tel:${emergencyContact?.phone}`;
+                          }
+                        }}
+                      >
+                        Call Now
+                      </Button>
+
+                    </div>
+
+                    <div className="flex items-center space-x-3">
+                      <Icon name="Mail" size={16} className="text-text-secondary" />
+                      <span className="text-sm text-foreground">Email Available</span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        iconName="Mail"
+                        iconSize={14}
+                        className="ml-auto"
+                        onClick={() =>
+                          window.open(
+                            "https://mail.google.com/mail/?view=cm&fs=1&to=suhail17mohammad@gmail.com&subject=Ayurveda%20Inquiry&body=Hello,%20I%20have%20some%20questions%20about%20Ayurveda.",
+                            "_blank"
+                          )
+                        }
+                      >
+                        Email
+                      </Button>
+
+
+                    </div>
+                  </div>
+
+                  <div className="mt-4 p-3 bg-warning/5 rounded-lg">
+                    <div className="flex items-start space-x-2">
+                      <Icon name="AlertTriangle" size={16} className="text-warning mt-0.5" />
+                      <div>
+                        <p className="text-sm text-foreground font-medium mb-1">When to Contact:</p>
+                        <ul className="text-xs text-text-secondary space-y-1">
+                          <li>• Severe allergic reactions to prescribed preparations</li>
+                          <li>• Unexpected symptoms or discomfort</li>
+                          <li>• Questions about medication interactions</li>
+                          <li>• Emergency rescheduling needs</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

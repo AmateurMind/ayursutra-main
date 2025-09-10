@@ -434,7 +434,7 @@ BEGIN
     ) VALUES
         (patient_auth_id, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
          'patient@ayursutra.com', crypt('patient123', gen_salt('bf', 10)), now(), now(), now(),
-         '{"full_name": "Arjun Patel", "role": "patient"}'::jsonb, '{"provider": "email", "providers": ["email"]}'::jsonb,
+         '{"full_name": "Raj Pawar", "role": "patient"}'::jsonb, '{"provider": "email", "providers": ["email"]}'::jsonb,
          false, false, '', null, '', null, '', '', null, '', 0, '', null, null, '', '', null),
         (practitioner_auth_id, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
          'practitioner@ayursutra.com', crypt('practitioner123', gen_salt('bf', 10)), now(), now(), now(),

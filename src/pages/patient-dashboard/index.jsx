@@ -183,7 +183,7 @@ const PatientDashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="font-heading text-3xl font-semibold text-foreground mb-2">
-                  {getGreeting()}, {userProfile?.full_name?.split(' ')?.[0] || 'Guest'}! 🙏
+                  {getGreeting()}, {userProfile?.full_name?.split(' ')?.[0] || 'Raj'}! 🙏
                 </h1>
                 <p className="font-body text-text-secondary">
                   Welcome to your Ayurvedic wellness journey. Here is your therapy overview.
