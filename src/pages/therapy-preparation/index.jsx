@@ -191,7 +191,8 @@ const TherapyPreparation = () => {
       thumbnail: "https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg",
       duration: "8:45",
       instructor: "Dr. Rajesh Vaidya",
-      rating: "4.9"
+      rating: "4.9",
+      videoUrl: "https://www.youtube.com/watch?v=JWxFlKkSq54" // <-- added YouTube link
     },
     {
       id: 2,
@@ -200,7 +201,8 @@ const TherapyPreparation = () => {
       thumbnail: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg",
       duration: "12:30",
       instructor: "Dr. Meera Sharma",
-      rating: "4.8"
+      rating: "4.8",
+      videoUrl: "https://www.youtube.com/watch?v=Wemm-i6XHr8" // <-- added YouTube link
     },
     {
       id: 3,
@@ -209,7 +211,8 @@ const TherapyPreparation = () => {
       thumbnail: "https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg",
       duration: "6:15",
       instructor: "Dr. Amit Kumar",
-      rating: "4.7"
+      rating: "4.7",
+      videoUrl: "https://www.youtube.com/watch?v=RCxp0MLzRYw" // <-- added YouTube link
     }
   ];
 

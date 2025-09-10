@@ -41,16 +41,15 @@ const InstructionalContent = ({ videos, tips, emergencyContact }) => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <Button
-                    variant="default"
-                    size="lg"
-                    onClick={() => playVideo(video?.id)}
-                    iconName="Play"
-                    iconSize={24}
-                    className="bg-white/90 text-foreground hover:bg-white"
-                  >
-                    Play Video
-                  </Button>
+                <Button
+                  className="bg-white/90 text-foreground hover:bg-white"
+                  onClick={() => window.open(video.videoUrl, "_blank")}
+                  iconName="Play"
+                  iconSize={24}
+                >
+                  Play Video
+                </Button>
+
                 </div>
                 <div className="absolute top-4 right-4 bg-black/70 text-white px-2 py-1 rounded text-sm">
                   {video?.duration}
