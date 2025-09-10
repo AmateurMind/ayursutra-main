@@ -2,29 +2,31 @@ import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 import Select from '../../../components/ui/Select';
+import { toast } from "react-hot-toast";
+
 
 const QuickBookingPanel = ({ onBookTherapy }) => {
   const [selectedTherapy, setSelectedTherapy] = useState('');
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
 
   const therapyOptions = [
-    { 
-      value: 'abhyanga', 
+    {
+      value: 'abhyanga',
       label: 'Abhyanga (Oil Massage)',
       description: 'Full body therapeutic oil massage'
     },
-    { 
-      value: 'shirodhara', 
+    {
+      value: 'shirodhara',
       label: 'Shirodhara (Oil Dripping)',
       description: 'Continuous oil pouring on forehead'
     },
-    { 
-      value: 'virechana', 
+    {
+      value: 'virechana',
       label: 'Virechana (Purgation)',
       description: 'Therapeutic purification treatment'
     },
-    { 
-      value: 'nasya', 
+    {
+      value: 'nasya',
       label: 'Nasya (Nasal Therapy)',
       description: 'Medicated oil administration through nose'
     }
@@ -40,10 +42,8 @@ const QuickBookingPanel = ({ onBookTherapy }) => {
 
   const handleQuickBook = () => {
     if (selectedTherapy && selectedTimeSlot) {
-      onBookTherapy({
-        therapy: selectedTherapy,
-        timeSlot: selectedTimeSlot
-      });
+      toast.error("Only premium users can access this feature!\n(Use the Advanced option)");
+
     }
   };
 
