@@ -26,7 +26,7 @@ const BookingConfirmation = ({ bookingData, onNewBooking }) => {
       month: 'long',
       day: 'numeric'
     });
-    
+
     const formattedTime = `${new Date(`2000-01-01T${startTime}`)?.toLocaleTimeString('en-IN', {
       hour: 'numeric',
       minute: '2-digit',
@@ -36,7 +36,7 @@ const BookingConfirmation = ({ bookingData, onNewBooking }) => {
       minute: '2-digit',
       hour12: true
     })}`;
-    
+
     return { formattedDate, formattedTime };
   };
 
@@ -46,7 +46,7 @@ const BookingConfirmation = ({ bookingData, onNewBooking }) => {
     bookingData?.slot?.endTime
   );
 
-  const totalAmount = bookingData?.therapy?.price + bookingData?.practitioner?.consultationFee;
+  const totalAmount = (Number(bookingData?.therapy?.price) || 0) + (Number(bookingData?.practitioner?.consultationFee) || 0);
 
   const preparationSteps = [
     {
@@ -79,11 +79,11 @@ const BookingConfirmation = ({ bookingData, onNewBooking }) => {
   ];
 
   const handleViewPreparation = () => {
-    navigate('/therapy-preparation', { 
-      state: { 
+    navigate('/therapy-preparation', {
+      state: {
         bookingData,
-        fromBooking: true 
-      } 
+        fromBooking: true
+      }
     });
   };
 

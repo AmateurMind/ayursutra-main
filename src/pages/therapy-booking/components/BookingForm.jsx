@@ -4,6 +4,7 @@ import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import Select from '../../../components/ui/Select';
 import { Checkbox } from '../../../components/ui/Checkbox';
+import Swal from "sweetalert2";
 
 const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBookingSubmit }) => {
   const [formData, setFormData] = useState({
@@ -110,37 +111,6 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
     return Object.keys(newErrors)?.length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e?.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      const bookingData = {
-        ...formData,
-        therapy: selectedTherapy,
-        practitioner: selectedPractitioner,
-        slot: selectedSlot,
-        bookingId: `AYS-${Date.now()}`,
-        bookingDate: new Date()?.toISOString(),
-        status: 'confirmed'
-      };
-
-      onBookingSubmit(bookingData);
-    } catch (error) {
-      console.error('Booking submission error:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -168,6 +138,89 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
     })}`;
 
     return { formattedDate, formattedTime };
+  };
+
+  const handleSubmit = async (e) => {
+    e?.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const { formattedDate, formattedTime } = formatDateTime(
+        selectedSlot?.date || new Date(),
+        selectedSlot?.startTime,
+        selectedSlot?.endTime
+      );
+
+      const bookingData = {
+        ...formData,
+        therapy: {
+          name: selectedTherapy?.name,
+          price: selectedTherapy?.price,
+          duration: selectedTherapy?.duration,
+          category: selectedTherapy?.category
+        },
+        practitioner: {
+          name: selectedPractitioner?.name,
+          title: selectedPractitioner?.title,
+          experience: selectedPractitioner?.experience,
+          consultationFee: selectedPractitioner?.consultationFee
+        },
+        slot: {
+          date: selectedSlot?.date,
+          startTime: selectedSlot?.startTime,
+          endTime: selectedSlot?.endTime
+        },
+        bookingId: `AYS-${Date.now()}`,
+        bookingDate: new Date()?.toISOString(),
+        status: "confirmed",
+        totalAmount: formatPrice(
+          selectedTherapy?.price + selectedPractitioner?.consultationFee
+        ),
+      };
+
+      // ✅ Prepare Web3Forms submission
+      const submissionData = new FormData();
+      submissionData.append("access_key", "77c9f68f-35c2-4a19-ae00-9e87cc827679"); // replace with your key
+      submissionData.append("subject", "New Panchakarma Appointment Booking");
+      submissionData.append(
+        "message",
+        `📌 New Booking Confirmed:\n
+        Name: ${formData.patientName}
+        Phone: ${formData.phone}
+        Email: ${formData.email}
+        Age: ${formData.age}
+        Gender: ${formData.gender}
+        Therapy: ${selectedTherapy?.name}
+        Practitioner: ${selectedPractitioner?.name}
+        Slot: ${formattedDate} | ${formattedTime}
+        Total Amount: ${bookingData.totalAmount}
+        Booking ID: ${bookingData.bookingId}`
+      );
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: submissionData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        Swal.fire("✅ Success", "Booking confirmed and email sent!", "success");
+        onBookingSubmit(bookingData);
+      } else {
+        Swal.fire("❌ Error", result.message || "Failed to send email", "error");
+      }
+    } catch (error) {
+      console.error("Booking submission error:", error);
+      Swal.fire("⚠️ Error", "Network error. Try again later.", "error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!selectedTherapy || !selectedPractitioner || !selectedSlot) {

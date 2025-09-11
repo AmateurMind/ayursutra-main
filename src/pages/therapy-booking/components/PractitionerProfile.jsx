@@ -147,10 +147,10 @@ const PractitionerProfile = ({ selectedPractitioner, onPractitionerSelect, avail
             variant="ghost"
             size="sm"
             onClick={() => onPractitionerSelect(null)}
-            iconName="X"
+            iconName="ArrowLeft"
             iconSize={16}
           >
-            Change
+            Go Back
           </Button>
         </div>
         <div className="space-y-4">
@@ -247,7 +247,7 @@ const PractitionerProfile = ({ selectedPractitioner, onPractitionerSelect, avail
       <div className="flex items-center justify-between">
         <h2 className="font-heading font-semibold text-xl">View Practitioner</h2>
         <div className="text-sm text-text-secondary">
-          Select your preferred Vaidya
+          Choose your preferred Vaidya’s details
         </div>
       </div>
       <div className="space-y-4">
