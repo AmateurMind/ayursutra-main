@@ -166,17 +166,7 @@ const UpcomingSessionCard = ({ session, onViewDetails, onPrepare }) => {
       )}
 
       <div className="flex space-x-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleViewDetails}
-          iconName="Eye"
-          iconPosition="left"
-          className="flex-1"
-          disabled={loading}
-        >
-          View Details
-        </Button>
+        
         
         {session?.preparation_status !== 'completed' && (
           <Button

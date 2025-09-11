@@ -20,6 +20,8 @@ const PatientDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [progressData, setProgressData] = useState(null);
+  const [allSessionsModalOpen, setAllSessionsModalOpen] = useState(false);
+
 
   // Update current time every minute
   useEffect(() => {
@@ -54,10 +56,10 @@ const PatientDashboard = () => {
         preparation_status: 'pending',
         practitioner: {
           user_profile: {
-            full_name: 'Dr. Priya Sharma',
-            avatar_url: '/assets/images/doctor1.jpg'
+            full_name: 'Dr. Rajesh Sharma',
+            avatar_url: 'https://thumbs.dreamstime.com/b/mature-indian-doctor-portrait-male-medical-uniform-standing-plain-background-shadow-61211616.jpg'
           },
-          specialization: ['Panchakarma Specialist'],
+          specialization: ['Senior Vaidya'],
           rating: 4.8
         }
       },
@@ -75,11 +77,11 @@ const PatientDashboard = () => {
         preparation_status: 'completed',
         practitioner: {
           user_profile: {
-            full_name: 'Dr. Raj Kumar',
-            avatar_url: '/assets/images/doctor2.jpg'
+            full_name: 'Dr. Kavita Singh',
+            avatar_url: 'https://media.istockphoto.com/id/1293373291/photo/portrait-of-confident-ethnic-female-doctor.jpg?s=612x612&w=0&k=20&c=CJsw6IgTecJZoBeVXqZdvh2BI-NyVa-8VcQM3fPhbYc='
           },
           specialization: ['Ayurvedic Physician'],
-          rating: 4.9
+          rating: 4.6
         }
       },
       {
@@ -222,6 +224,14 @@ const PatientDashboard = () => {
       // Handle quick booking logic
     }
   };
+  const handleViewAllSessions = () => {
+    setAllSessionsModalOpen(true);
+  };
+  
+  const handleCloseAllSessionsModal = () => {
+    setAllSessionsModalOpen(false);
+  };
+  
 
   const handleNavigate = (destination) => {
     if (typeof destination === 'string' && destination?.startsWith('/')) {
@@ -270,121 +280,123 @@ const PatientDashboard = () => {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-background">
-      <Header
-        userRole={userProfile?.role || 'patient'}
-        isAuthenticated={isAuthenticated}
-        userName={userProfile?.full_name}
-        onLogout={handleLogout}
-      />
-      <main className="pt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Welcome Section */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="font-heading text-3xl font-semibold text-foreground mb-2">
-                  {getGreeting()}, {userProfile?.full_name?.split(' ')?.[0] || 'Raj'}! 🙏
-                </h1>
-                <p className="font-body text-text-secondary">
-                  Welcome to your Ayurvedic wellness journey. Here is your therapy overview.
-                </p>
-              </div>
-              <div className="hidden md:flex items-center space-x-4">
-                <div className="text-right">
-                  <p className="font-body text-sm text-foreground">
-                    {currentTime?.toLocaleDateString('en-IN', {
-                      weekday: 'long',
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
+    return (
+      <div className="min-h-screen bg-background">
+        <Header
+          userRole={userProfile?.role || 'patient'}
+          isAuthenticated={isAuthenticated}
+          userName={userProfile?.full_name}
+          onLogout={handleLogout}
+        />
+        <main className="pt-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {/* Welcome Section */}
+            <div className="mb-8">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="font-heading text-3xl font-semibold text-foreground mb-2">
+                    {getGreeting()}, {userProfile?.full_name?.split(' ')?.[0] || 'Raj'}! 🙏
+                  </h1>
+                  <p className="font-body text-text-secondary">
+                    Welcome to your Ayurvedic wellness journey. Here is your therapy overview.
                   </p>
-                  <p className="font-caption text-xs text-text-secondary">
-                    {currentTime?.toLocaleTimeString('en-IN', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      hour12: true
-                    })}
-                  </p>
+                </div>
+                <div className="hidden md:flex items-center space-x-4">
+                  <div className="text-right">
+                    <p className="font-body text-sm text-foreground">
+                      {currentTime?.toLocaleDateString('en-IN', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </p>
+                    <p className="font-caption text-xs text-text-secondary">
+                      {currentTime?.toLocaleTimeString('en-IN', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      })}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {error && (
-            <div className="mb-6 p-4 bg-error/10 border border-error/20 rounded-lg">
-              <div className="flex items-center space-x-2">
-                <Icon name="AlertCircle" size={16} className="text-error" />
-                <span className="font-body text-sm text-error">{error}</span>
-              </div>
-            </div>
-          )}
-
-          {/* Main Dashboard Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left Column - Primary Content */}
-            <div className="lg:col-span-2 space-y-8">
-              {/* Upcoming Sessions */}
-              <section>
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="font-heading text-xl font-semibold text-foreground">
-                    Upcoming Therapy Sessions
-                  </h2>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => navigate('/therapy-booking')}
-                    iconName="Plus"
-                    iconPosition="left"
-                  >
-                    Book New
-                  </Button>
+            {error && (
+              <div className="mb-6 p-4 bg-error/10 border border-error/20 rounded-lg">
+                <div className="flex items-center space-x-2">
+                  <Icon name="AlertCircle" size={16} className="text-error" />
+                  <span className="font-body text-sm text-error">{error}</span>
                 </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {upcomingSessions?.length > 0 ? (
-                    upcomingSessions?.slice(0, 2)?.map((session) => (
-                      <UpcomingSessionCard
-                        key={session?.id}
-                        session={session}
-                        onViewDetails={handleViewSessionDetails}
-                        onPrepare={handlePrepareSession}
-                      />
-                    ))
-                  ) : (
-                    <div className="col-span-2 text-center py-8 bg-muted/30 rounded-lg border border-border">
-                      <Icon name="Calendar" size={48} className="text-muted-foreground mx-auto mb-4" />
-                      <h3 className="font-heading font-medium text-foreground mb-2">
-                        No Upcoming Sessions
-                      </h3>
-                      <p className="font-body text-sm text-text-secondary mb-4">
-                        Book your first therapy session to begin your wellness journey
-                      </p>
+              </div>
+            )}
+
+            {/* Main Dashboard Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Left Column - Primary Content */}
+              <div className="lg:col-span-2 space-y-8">
+                {/* Upcoming Sessions */}
+                <section>
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="font-heading text-xl font-semibold text-foreground">
+                      Upcoming Therapy Sessions
+                    </h2>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => navigate('/therapy-booking')}
+                      iconName="Plus"
+                      iconPosition="left"
+                    >
+                      Book New
+                    </Button>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {upcomingSessions?.length > 0 ? (
+                      upcomingSessions?.slice(0, 2)?.map((session) => (
+                        <UpcomingSessionCard
+                          key={session?.id}
+                          session={session}
+                          onViewDetails={handleViewSessionDetails}
+                          onPrepare={handlePrepareSession}
+                        />
+                      ))
+                    ) : (
+                      <div className="col-span-2 text-center py-8 bg-muted/30 rounded-lg border border-border">
+                        <Icon name="Calendar" size={48} className="text-muted-foreground mx-auto mb-4" />
+                        <h3 className="font-heading font-medium text-foreground mb-2">
+                          No Upcoming Sessions
+                        </h3>
+                        <p className="font-body text-sm text-text-secondary mb-4">
+                          Book your first therapy session to begin your wellness journey
+                        </p>
+                        <Button
+                          onClick={() => navigate('/therapy-booking')}
+                          iconName="Plus"
+                          iconPosition="left"
+                        >
+                          Book Your First Session
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+
+                  {upcomingSessions?.length > 2 && (
+                    <div className="mt-6 text-center">
                       <Button
-                        onClick={() => navigate('/therapy-booking')}
-                        iconName="Plus"
-                        iconPosition="left"
+                        variant="ghost"
+                        onClick={handleViewAllSessions}
+                        iconName="ArrowRight"
+                        iconPosition="right"
                       >
-                        Book Your First Session
+                        View All Sessions ({upcomingSessions?.length})
                       </Button>
                     </div>
                   )}
-                </div>
 
-                {upcomingSessions?.length > 2 && (
-                  <div className="mt-6 text-center">
-                    <Button
-                      variant="ghost"
-                      onClick={() => console.log('View all sessions')}
-                      iconName="ArrowRight"
-                      iconPosition="right"
-                    >
-                      View All Sessions ({upcomingSessions?.length})
-                    </Button>
-                  </div>
-                )}
+
               </section>
 
               {/* Progress Tracking */}
@@ -463,6 +475,33 @@ const PatientDashboard = () => {
           </div>
         </div>
       </main>
+      {allSessionsModalOpen && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="bg-background rounded-lg p-6 w-full max-w-3xl max-h-[80vh] overflow-y-auto">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">All Upcoming Sessions</h2>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleCloseAllSessionsModal}
+        >
+          Close
+        </Button>
+      </div>
+      <div className="space-y-4">
+        {getMockUpcomingSessions().map((session) => (
+          <UpcomingSessionCard
+           key={session.id}
+            session={session}
+            onViewDetails={handleViewSessionDetails}
+            onPrepare={handlePrepareSession}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
