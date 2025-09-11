@@ -186,27 +186,59 @@ const BookingForm = ({ selectedTherapy, selectedPractitioner, selectedSlot, onBo
       // ✅ Prepare Web3Forms submission
       const submissionData = new FormData();
       submissionData.append("access_key", "77c9f68f-35c2-4a19-ae00-9e87cc827679"); // replace with your key
-      submissionData.append("subject", "New Panchakarma Appointment Booking");
+      submissionData.append("subject", "Hello Dr. You have New Panchakarma Appointment Booking");
       submissionData.append(
         "message",
-        `📌 New Booking Confirmed:\n
-        Name: ${formData.patientName}
-        Phone: ${formData.phone}
-        Email: ${formData.email}
-        Age: ${formData.age}
+        `📌 Appointment Schedule:\n
+        Hello Dr. ${selectedPractitioner?.name}\n
+        Patient's Details:
+        ------------------\n
+        Name: ${formData.patientName}\n
+        Phone: ${formData.phone}\n
+        Email: ${formData.email}\n
+        Age: ${formData.age}\n
         Gender: ${formData.gender}
         Therapy: ${selectedTherapy?.name}
         Practitioner: ${selectedPractitioner?.name}
         Slot: ${formattedDate} | ${formattedTime}
         Total Amount: ${bookingData.totalAmount}
-        Booking ID: ${bookingData.bookingId}`
+        Booking ID: ${bookingData.bookingId}
+        Notes:
+        ------
+        - Please review the patient’s medical history if needed.
+        - Ensure preparation guidelines are communicated before the session.`
       );
+      // Admin receives the email
+      submissionData.append("to", "suhail17mohammad@gmail.com"); // put your admin email here
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: submissionData,
       });
+      // ✅ Prepare Web3Forms submission for patient
+      const patientSubmission = new FormData();
+      patientSubmission.append("access_key", "8501ef93-4fb1-427e-b8f8-4c34686a53a6"); // <-- patient API key
+      patientSubmission.append("subject", "Your Panchakarma Appointment Confirmation");
+      patientSubmission.append(
+        "message",
+        `📌 Hi ${formData.patientName},\n
+        Your booking is confirmed:\n
+        Therapy: ${selectedTherapy?.name}\n
+        Practitioner: ${selectedPractitioner?.name}\n
+        Date & Time: ${formattedDate} | ${formattedTime}\n
+        Total Amount: ${bookingData.totalAmount}\n
+        Booking ID: ${bookingData.bookingId}\n
+        Notes:\n
+        ------\n
+        - Please follow all preparation guidelines before your session.\n
+        - Bring any relevant medical history or medications with you.`
+      );
+      patientSubmission.append("to", formData.email); // patient email
 
+      await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: patientSubmission,
+      });
       const result = await response.json();
 
       if (result.success) {
