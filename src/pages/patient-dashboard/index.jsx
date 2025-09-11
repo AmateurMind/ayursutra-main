@@ -10,7 +10,6 @@ import NotificationCenter from './components/NotificationCenter';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
-import { appointmentService } from '../../services/appointmentService';
 import { therapyService } from '../../services/therapyService';
 
 const PatientDashboard = () => {
@@ -38,54 +37,155 @@ const PatientDashboard = () => {
     }
   }, [user?.id]);
 
+  // Mock upcoming sessions data - replace this with your actual data source
+  const getMockUpcomingSessions = () => {
+    return [
+      {
+        id: '1',
+        therapy_definition: {
+          name: 'Abhyanga Full Body Massage',
+          therapy_type: 'abhyanga',
+          duration_minutes: 60
+        },
+        scheduled_date: '2024-09-15',
+        scheduled_time: '14:30',
+        status: 'confirmed',
+        room_number: 'Room 101',
+        preparation_status: 'pending',
+        practitioner: {
+          user_profile: {
+            full_name: 'Dr. Priya Sharma',
+            avatar_url: '/assets/images/doctor1.jpg'
+          },
+          specialization: ['Panchakarma Specialist'],
+          rating: 4.8
+        }
+      },
+      {
+        id: '2',
+        therapy_definition: {
+          name: 'Shirodhara Treatment',
+          therapy_type: 'shirodhara',
+          duration_minutes: 45
+        },
+        scheduled_date: '2024-09-18',
+        scheduled_time: '10:00',
+        status: 'ready',
+        room_number: 'Room 203',
+        preparation_status: 'completed',
+        practitioner: {
+          user_profile: {
+            full_name: 'Dr. Raj Kumar',
+            avatar_url: '/assets/images/doctor2.jpg'
+          },
+          specialization: ['Ayurvedic Physician'],
+          rating: 4.9
+        }
+      },
+      {
+        id: '3',
+        therapy_definition: {
+          name: 'Consultation Session',
+          therapy_type: 'consultation',
+          duration_minutes: 30
+        },
+        scheduled_date: '2024-09-20',
+        scheduled_time: '16:00',
+        status: 'pending',
+        room_number: 'Room 105',
+        preparation_status: 'preparation_required',
+        practitioner: {
+          user_profile: {
+            full_name: 'Dr. Meera Reddy',
+            avatar_url: '/assets/images/doctor3.jpg'
+          },
+          specialization: ['Senior Ayurvedic Consultant'],
+          rating: 4.7
+        }
+      }
+    ];
+  };
+
+  // Direct API call function - replace with your actual API endpoint
+  const fetchUpcomingSessions = async (userId, limit = 3) => {
+    try {
+      // Option 1: Replace with your actual API call
+      // const response = await fetch(`/api/patients/${userId}/appointments/upcoming?limit=${limit}`);
+      // if (!response.ok) throw new Error('Failed to fetch appointments');
+      // return await response.json();
+
+      // Option 2: Use mock data for now
+      const mockData = getMockUpcomingSessions();
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      return mockData.slice(0, limit);
+      
+    } catch (error) {
+      console.error('Error fetching upcoming sessions:', error);
+      throw error;
+    }
+  };
+
   const loadDashboardData = async () => {
     try {
       setLoading(true);
       setError('');
       
-      // Load upcoming appointments
-      const upcomingAppointments = await appointmentService?.getUpcomingAppointments(user?.id, 3);
-      setUpcomingSessions(upcomingAppointments || []);
+      // Load upcoming sessions directly
+      const sessions = await fetchUpcomingSessions(user?.id, 3);
+      setUpcomingSessions(sessions || []);
 
-      // Load progress data
-      const progressResults = await therapyService?.getPatientProgress(user?.id);
-      if (progressResults?.length > 0) {
-        const latestProgress = progressResults?.[0];
-        setProgressData({
-          currentWeight: latestProgress?.weight_current || 75,
-          targetWeight: 70,
-          sessionsCompleted: latestProgress?.sessions_completed || 0,
-          totalSessions: latestProgress?.total_sessions_planned || 15,
-          weeklyProgress: [
-            { week: 1, progress: 10 },
-            { week: 2, progress: 25 },
-            { week: 3, progress: 40 },
-            { week: 4, progress: Math.min((latestProgress?.progress_percentage || 0), 100) }
-          ]
-        });
-      } else {
-        // Default progress data if no progress records
-        setProgressData({
-          currentWeight: 75,
-          targetWeight: 70,
-          sessionsCompleted: 0,
-          totalSessions: 0,
-          weeklyProgress: [
-            { week: 1, progress: 0 },
-            { week: 2, progress: 0 },
-            { week: 3, progress: 0 },
-            { week: 4, progress: 0 }
-          ]
-        });
+      // Load progress data (keep existing therapyService if it works)
+      try {
+        const progressResults = await therapyService?.getPatientProgress(user?.id);
+        if (progressResults?.length > 0) {
+          const latestProgress = progressResults?.[0];
+          setProgressData({
+            currentWeight: latestProgress?.weight_current || 75,
+            targetWeight: 70,
+            sessionsCompleted: latestProgress?.sessions_completed || 0,
+            totalSessions: latestProgress?.total_sessions_planned || 15,
+            weeklyProgress: [
+              { week: 1, progress: 10 },
+              { week: 2, progress: 25 },
+              { week: 3, progress: 40 },
+              { week: 4, progress: Math.min((latestProgress?.progress_percentage || 0), 100) }
+            ]
+          });
+        } else {
+          setProgressData(getDefaultProgressData());
+        }
+      } catch (progressError) {
+        console.warn('Progress data unavailable, using defaults:', progressError);
+        setProgressData(getDefaultProgressData());
       }
 
     } catch (error) {
-      setError('Failed to load dashboard data');
+      setError('Failed to load session data');
       console.error('Error loading dashboard data:', error);
+      
+      // Set empty sessions on error
+      setUpcomingSessions([]);
+      setProgressData(getDefaultProgressData());
     } finally {
       setLoading(false);
     }
   };
+
+  const getDefaultProgressData = () => ({
+    currentWeight: 75,
+    targetWeight: 70,
+    sessionsCompleted: 0,
+    totalSessions: 0,
+    weeklyProgress: [
+      { week: 1, progress: 0 },
+      { week: 2, progress: 0 },
+      { week: 3, progress: 0 },
+      { week: 4, progress: 0 }
+    ]
+  });
 
   const getGreeting = () => {
     const hour = currentTime?.getHours();
@@ -106,9 +206,11 @@ const PatientDashboard = () => {
   const handleViewSessionDetails = (sessionId) => {
     console.log('Viewing session details for:', sessionId);
     // Navigate to session details or open modal
+    // navigate(`/session-details/${sessionId}`);
   };
 
   const handlePrepareSession = (sessionId) => {
+    console.log('Preparing session:', sessionId);
     navigate('/therapy-preparation');
   };
 
