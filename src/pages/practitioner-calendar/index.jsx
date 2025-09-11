@@ -14,7 +14,7 @@ const PractitionerCalendar = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAuthenticated] = useState(true);
-  const [userName] = useState('Dr. Rajesh Sharma');
+  const [userName] = useState('Admin');
 
   // Mock data for appointments
   const [appointments] = useState([

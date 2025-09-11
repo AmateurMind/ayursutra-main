@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
 
 
-const CalendarGrid = ({ 
-  viewMode, 
-  currentDate, 
-  appointments, 
+const CalendarGrid = ({
+  viewMode,
+  currentDate,
+  appointments,
   resources,
   onAppointmentClick,
   onAppointmentDrop,
-  onTimeSlotClick 
+  onTimeSlotClick
 }) => {
   const [draggedAppointment, setDraggedAppointment] = useState(null);
 
@@ -28,7 +28,7 @@ const CalendarGrid = ({
     const days = [];
     const startOfWeek = new Date(currentDate);
     startOfWeek?.setDate(currentDate?.getDate() - currentDate?.getDay());
-    
+
     for (let i = 0; i < 7; i++) {
       const day = new Date(startOfWeek);
       day?.setDate(startOfWeek?.getDate() + i);
@@ -45,7 +45,7 @@ const CalendarGrid = ({
     const lastDay = new Date(year, month + 1, 0);
     const startDate = new Date(firstDay);
     startDate?.setDate(startDate?.getDate() - firstDay?.getDay());
-    
+
     const days = [];
     for (let i = 0; i < 42; i++) {
       const day = new Date(startDate);
@@ -75,11 +75,11 @@ const CalendarGrid = ({
 
   const getAppointmentColor = (status) => {
     switch (status) {
-      case 'confirmed': return 'bg-success/10 border-success text-success-foreground';
-      case 'pending': return 'bg-warning/10 border-warning text-warning-foreground';
-      case 'cancelled': return 'bg-error/10 border-error text-error-foreground';
-      case 'completed': return 'bg-primary/10 border-primary text-primary-foreground';
-      default: return 'bg-muted border-border text-foreground';
+      case 'confirmed': return 'bg-success/10 border-success text-black';
+      case 'pending': return 'bg-warning/10 border-warning text-black';
+      case 'cancelled': return 'bg-error/10 border-error text-black';
+      case 'completed': return 'bg-primary/10 border-primary text-black';
+      default: return 'bg-muted border-border text-black';
     }
   };
 
@@ -118,7 +118,7 @@ const CalendarGrid = ({
   // Day View
   if (viewMode === 'day') {
     const timeSlots = generateTimeSlots();
-    
+
     return (
       <div className="bg-card rounded-lg shadow-breathing overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-0 min-h-[600px]">
@@ -148,7 +148,7 @@ const CalendarGrid = ({
                   const slotAppointments = appointments?.filter(
                     apt => apt?.resourceId === resource?.id && apt?.time === time
                   );
-                  
+
                   return (
                     <div
                       key={time}
@@ -175,7 +175,7 @@ const CalendarGrid = ({
   if (viewMode === 'week') {
     const weekDays = generateWeekDays();
     const timeSlots = generateTimeSlots()?.slice(0, 20); // Reduced for better display
-    
+
     return (
       <div className="bg-card rounded-lg shadow-breathing overflow-hidden">
         <div className="grid grid-cols-8 gap-0 min-h-[500px]">
@@ -206,7 +206,7 @@ const CalendarGrid = ({
                 const dayAppointments = appointments?.filter(
                   apt => apt?.date?.toDateString() === day?.toDateString() && apt?.time === time
                 );
-                
+
                 return (
                   <div
                     key={time}
@@ -235,7 +235,7 @@ const CalendarGrid = ({
 
   // Month View
   const monthDays = generateMonthDays();
-  
+
   return (
     <div className="bg-card rounded-lg shadow-breathing overflow-hidden">
       {/* Month Header */}
@@ -254,7 +254,7 @@ const CalendarGrid = ({
           );
           const isCurrentMonth = day?.getMonth() === currentDate?.getMonth();
           const isToday = day?.toDateString() === new Date()?.toDateString();
-          
+
           return (
             <div
               key={day?.toISOString()}
