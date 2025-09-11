@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/ui/Header';
 import CalendarHeader from './components/CalendarHeader';
 import CalendarGrid from './components/CalendarGrid';
@@ -15,6 +16,7 @@ const PractitionerCalendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAuthenticated] = useState(true);
   const [userName] = useState('Admin');
+  const navigate = useNavigate();
 
   // Mock data for appointments
   const [appointments] = useState([
@@ -183,7 +185,7 @@ const PractitionerCalendar = () => {
 
   const handleDateNavigation = (direction) => {
     const newDate = new Date(currentDate);
-    
+
     if (viewMode === 'day') {
       newDate?.setDate(currentDate?.getDate() + (direction === 'next' ? 1 : -1));
     } else if (viewMode === 'week') {
@@ -191,7 +193,7 @@ const PractitionerCalendar = () => {
     } else if (viewMode === 'month') {
       newDate?.setMonth(currentDate?.getMonth() + (direction === 'next' ? 1 : -1));
     }
-    
+
     setCurrentDate(newDate);
   };
 
@@ -211,8 +213,8 @@ const PractitionerCalendar = () => {
     } else if (resourceId === 'available') {
       setSelectedResources(resources?.filter(r => r?.status === 'available')?.map(r => r?.id));
     } else {
-      setSelectedResources(prev => 
-        prev?.includes(resourceId) 
+      setSelectedResources(prev =>
+        prev?.includes(resourceId)
           ? prev?.filter(id => id !== resourceId)
           : [...prev, resourceId]
       );
@@ -268,7 +270,7 @@ const PractitionerCalendar = () => {
   };
 
   const handleLogout = () => {
-    console.log('Logging out...');
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -279,7 +281,6 @@ const PractitionerCalendar = () => {
         userName={userName}
         onLogout={handleLogout}
       />
-      
       <main className="pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Page Header */}
