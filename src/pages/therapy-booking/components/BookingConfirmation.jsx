@@ -2,9 +2,32 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
+import UpcomingSessionCard from '../../../pages/patient-dashboard/components/UpcomingSessionCard';
 
 const BookingConfirmation = ({ bookingData, onNewBooking }) => {
   const navigate = useNavigate();
+  const mapBookingToSession = (bookingData) => ({
+    id: bookingData?.bookingId,
+    therapy_definition: {
+      name: bookingData?.therapy?.name,
+      therapy_type: bookingData?.therapy?.category,
+      duration_minutes: parseInt(bookingData?.therapy?.duration) || 60,
+    },
+    practitioner: {
+      user_profile: {
+        full_name: bookingData?.practitioner?.name,
+        avatar_url: '/public/assets/images/no_image.png',
+      },
+      specialization: [bookingData?.practitioner?.title],
+      rating: '4.8',
+    },
+    scheduled_date: bookingData?.slot?.date,
+    scheduled_time: bookingData?.slot?.startTime,
+    room_number: bookingData?.room || 'Room TBA',
+    status: 'confirmed',
+    preparation_status: 'pending'
+  });
+  
 
   if (!bookingData) {
     return null;
@@ -110,6 +133,12 @@ const BookingConfirmation = ({ bookingData, onNewBooking }) => {
           </p>
         </div>
       </div>
+      {/* Upcoming Session Preview */}
+      <UpcomingSessionCard
+        session={mapBookingToSession(bookingData)}
+        onViewDetails={() => navigate(`/session/${bookingData?.bookingId}`)}
+        onPrepare={() => navigate('/therapy-preparation', { state: { bookingData } })}
+      />
       {/* Appointment Details */}
       <div className="bg-card rounded-lg p-6 space-y-6">
         <h2 className="font-heading font-semibold text-xl border-b border-border pb-3">
